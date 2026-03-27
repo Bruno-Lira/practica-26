@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador Dinámico de Tablas</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px;
+            margin: 0;
+        }
+
+        .configuracion {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        input {
+            padding: 10px;
+            width: 80px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #contenedor-tablas {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .tabla-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #4caf50;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .tabla-card h3 {
+            margin-top: 0;
+            color: #2e7d32;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        .tabla-card p {
+            margin: 4px 0;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="configuracion">
+        <h2>Generador de Tablas</h2>
+        <p>¿Hasta qué número quieres generar las tablas?</p>
+        <input type="number" id="input-numero" placeholder="Ej. 5" min="1">
+        <button id="btn-generar">Generar Tablas</button>
+    </div>
+
+    <div id="contenedor-tablas"></div>
+
+    <script>
+        const btn = document.getElementById('btn-generar');
+        const input = document.getElementById('input-numero');
+        const contenedor = document.getElementById('contenedor-tablas');
+
+        btn.addEventListener('click', () => {
+            // Convertimos el valor a número entero
+            const limite = parseInt(input.value);
+
+            // Validación: ¿Es un número válido y mayor a 0?
+            if (isNaN(limite) || limite <= 0) {
+                alert("Por favor, ingresa un número entero positivo.");
+                return;
+            }
+
+            // Limpiar contenido previo
+            contenedor.innerHTML = '';
+
+            // CICLO 1: Genera las tablas desde el 1 hasta el número ingresado
+            for (let i = 1; i <= limite; i++) {
+                
+                const card = document.createElement('div');
+                card.classList.add('tabla-card');
+
+                let contenidoHTML = `<h3>Tabla del ${i}</h3>`;
+
+                // CICLO 2: Genera las multiplicaciones del 1 al 10 para cada tabla
+                for (let j = 1; j <= 10; j++) {
+                    contenidoHTML += `<p>${i} x ${j} = ${i * j}</p>`;
+                }
+
+                card.innerHTML = contenidoHTML;
+                contenedor.appendChild(card);
+            }
+        });
+    </script>
+</body>
+</html>
